@@ -31,7 +31,7 @@ func newPlayerSession(serverPID *actor.PID, sid int,conn *websocket.Conn) actor.
 		return &PlayerSession{
 			conn: conn,
 			sessionID: sid,
-			serverPID: serverPID,
+			serverPID: serverPID,//local/server
 		}
 	}
 } 
@@ -176,9 +176,10 @@ func (s *GameServer) handleWS(w http.ResponseWriter, r * http.Request){
 
 	// creating sesssion ID
 	sid := rand.Intn(math.MaxInt)
+	// fmt.Println(">>>>>>>>> PID from s.ctx.PID =", s.ctx.PID())
 	pid := s.ctx.SpawnChild(newPlayerSession(s.ctx.PID(),sid,conn), fmt.Sprintf("session_%d", sid))
+	// fmt.Println(">>>>>>>> PID from spawnchild =", pid)
 
-	// s.sessions[pid] = struct{}{}
 	s.sessions[sid] = pid
 	fmt.Printf("client with sid %d and pid %s just connected\n", sid, pid)
 }

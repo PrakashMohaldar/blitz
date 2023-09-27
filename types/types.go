@@ -1,4 +1,5 @@
 package types
+import "time"
 
 type WSMessage struct {
 	Type string `json: "type"`
@@ -20,4 +21,6 @@ type PlayerState struct {
 	Health int `json:"health"`
 	Position Position `json:"position"`
 	SessionID int
+	StartTime time.Time `json:"starttime"` 
 }
+

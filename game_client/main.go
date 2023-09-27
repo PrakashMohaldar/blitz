@@ -79,6 +79,9 @@ func main() {
 						fmt.Println("ws read error", err)
 						continue
 					}
+					EndTime := time.Now()
+					latency := EndTime.Sub(state.StartTime)
+					fmt.Println("Ping :", latency)
 					fmt.Println("need to update the state of player", state)
 				default:
 					fmt.Println("got message from the server", msg)
@@ -93,6 +96,7 @@ func main() {
 		state := types.PlayerState{
 			Health: 100,
 			Position: types.Position{X:x, Y: y},
+			StartTime: time.Now(),
 		}
 		b, err := json.Marshal(state)
 
